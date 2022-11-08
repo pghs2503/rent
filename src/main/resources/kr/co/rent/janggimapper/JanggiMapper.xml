@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.rent.janggimapper.JanggiMapper">
+
+  	<select id="carsel" resultType="kr.co.rent.adminvo.ProductVO">
+  		select * from product where pcode like concat(#{param1},'%')
+  	</select>
+  	<select id="pimg" resultType="kr.co.rent.adminvo.ProductVO">
+  		select * from product where pcode = #{param1}
+  	</select>
+  	<select id="jang_confirm" resultType="kr.co.rent.adminvo.ProductVO">
+  		select * from product where pcode = #{param1}
+  	</select>
+</mapper>

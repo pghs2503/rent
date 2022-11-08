@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.rent.reservemapper.ReserveMapper">
+
+  	<select id="carsel" resultType="kr.co.rent.adminvo.ProductVO">
+  		select * from product where pcode like concat(#{param1},'%')
+  	</select>
+    <insert id="reserve_ok" parameterType="kr.co.rent.reservevo.ReserveVO">
+        insert into reserve(title,inday,outday,area,pimg,userid,car_id,total,state,writeday)
+    	values(#{title},#{inday},#{outday},#{area},#{pimg},#{userid},#{car_id},#{total},#{state},now())
+   </insert>
+    
+    <select id="reserve_next" resultType="kr.co.rent.adminvo.ProductVO">
+     select * from product where pcode =#{param1}
+    </select>
+    
+    <select id="reserve_cnt" resultType="Integer">
+  		 select count(*) as cnt from product as p , reserve as r where r.car_id=p.id and r.area=#{param1} and outday between #{param2} and #{param3} and r.car_id=(select id from product where pcode=#{param4});
+  	</select>  
+  	 <!-- <select id="reserve_cnt" resultType="Integer">
+  		 select count(*) as cnt from product as p , reserve as r where r.car_id=p.id  and outday between #{param1} and #{param2} and r.car_id=(select id from product where pcode=#{param3});
+  	</select>   -->
+  	 <!-- r.inday <= #{param1} and #{param2} < r.outday and r.car_id=(select id from product where pcode=#{param3}); -->
+  	<select id="reserve_view" resultType="kr.co.rent.reservevo.ReserveVO">
+  	     select r.* from reserve as r , product as p where r.car_id = p.id order by id desc limit 1
+  	</select>
+  	 <update id="change_state">
+    update reserve set state=#{param2} where id=#{param1}
+  </update>
+</mapper>

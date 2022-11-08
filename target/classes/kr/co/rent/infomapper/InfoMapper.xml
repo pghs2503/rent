@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.rent.infomapper.InfoMapper">
+
+  	<select id="counsel_list" resultType="kr.co.rent.infovo.InfoVO">
+  		select * from infoboard order by id desc
+  	</select>
+  	<select id="counsel_content" resultType="kr.co.rent.infovo.InfoVO">
+  		select * from infoboard where id = #{param1}
+  	</select>
+  	<insert id="counsel_write_ok" parameterType="kr.co.rent.infovo.InfoVO">
+  		insert into infoboard(name,phone,email,content,writeday) values(#{name},#{phone},#{email},#{content},now())
+  	</insert>
+  	<delete id="counsel_delete">
+  		delete from infoboard where id=#{param1}
+  	</delete>
+</mapper>

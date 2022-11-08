@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.rent.membermapper.MemberMapper">
+
+	<select id="danre" resultType="kr.co.rent.reservevo.ReserveVO">
+		select * from reserve where userid = #{param1}
+	</select>
+
+
+	<select id="useridChk" resultType="String">
+		select userid from member where userid = #{param1}
+	</select>
+	
+	<insert id="member_input_ok" parameterType="kr.co.rent.membervo.MemberVO">
+		insert into member(userid,name,pwd,email,sung,phone,birthday,lo,pr,writeday) 
+		values(#{userid},#{name},#{pwd},#{email},#{sung},#{phone},#{birthday},#{lo},#{pr},now())
+	</insert>
+	
+	<select id="getbirth" resultType="String">
+		select birthday from member where userid = #{param1}
+	</select>
+	
+	<select id="getsung" resultType="String">
+		select sung from member where userid = #{param1}
+	</select>
+	
+	<insert id="license_ok" parameterType="kr.co.rent.membervo.LicenseVO">
+		insert into license(userid,jong,li1,li2,li3,li4,name,birthday,su,gigan1,gigan2,pay)
+		values(#{userid},#{jong},#{li1},#{li2},#{li3},#{li4},#{name},#{birthday},#{su},#{gigan1},#{gigan2},#{pay})
+	</insert>
+	
+	<select id="license_list" resultType="kr.co.rent.membervo.LicenseVO">
+		select * from license where userid = #{param1}
+	</select>
+	
+	<update id="myinfochange" parameterType="kr.co.rent.membervo.MemberVO">
+		update member set email=#{email} , phone=#{phone} where userid=#{userid}
+	</update>
+	
+	<select id="getPwd" resultType="String">
+		select pwd from member where userid=#{param1}
+	</select>
+	
+	<update id="pwdchange">
+		update member set pwd=#{param1} where userid=#{param2}
+	</update>
+	
+	<update id="memberout">
+		update member set state=2 where userid=#{param1}
+	</update>
+	
+</mapper>

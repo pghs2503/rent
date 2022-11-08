@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+  
+<mapper namespace="kr.co.rent.adminmapper.AdminMapper">
+
+	<select id="daelist" resultType="kr.co.rent.adminvo.DaeVO">
+		select * from dae
+	</select>
+	<select id="getJung" resultType="kr.co.rent.adminvo.JungVO">
+		select * from jung where daecode=#{param1}
+	</select>
+	<insert id="dae_ok" parameterType="kr.co.rent.adminvo.DaeVO">
+		insert into dae(code,title) values(#{code},#{title})
+	</insert>
+	
+	<insert id="jung_ok" parameterType="kr.co.rent.adminvo.JungVO">
+		insert into jung(code,title,daecode) values(#{code},#{title},#{daecode})
+	</insert>
+	
+	<insert id="so_ok" parameterType="kr.co.rent.adminvo.SoVO">
+		insert into so(title,code,daejung) values(#{title},#{code},#{daejung})
+	</insert>
+	
+	<select id="getSo" resultType="String">
+		select max(code) from so where daejung = #{param1}
+	</select>
+	
+	<select id="code" resultType="kr.co.rent.adminvo.DaeVO">
+		select * from dae
+	</select>
+	
+	<select id="getjungcode" resultType="kr.co.rent.adminvo.JungVO">
+		select * from jung where daecode = #{param1}
+	</select>
+
+	<select id="getsocode" resultType="kr.co.rent.adminvo.SoVO">
+		select * from so where daejung = #{param1}
+	</select>
+
+	<select id="getbunho" resultType="Integer">
+		select ifnull(substring(max(pcode),8,3),"0") from product where pcode like concat(#{param1},'%')
+	</select>
+	
+	<insert id="product_ok" parameterType="kr.co.rent.adminvo.AdminVO">
+		insert into product(pcode,pimg,cimg,title,made,jong,danprice,jangprice,carnum,seats,year,oiljong,yeonbi,grade,wheel,outcolor,incolor,sunroof,nav,auto,writeday)
+		values(#{pcode},#{pimg},#{cimg},#{title},#{made},#{jong},#{danprice},#{jangprice},#{carnum},#{seats},#{year},#{oiljong},#{yeonbi},#{grade},#{wheel},#{outcolor},#{incolor},#{sunroof},#{nav},#{auto},now())
+	</insert>
+
+</mapper>
